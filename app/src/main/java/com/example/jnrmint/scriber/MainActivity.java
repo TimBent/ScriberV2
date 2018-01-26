@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private MediaRecorder mRecorder = null;
 
     private Button   mPlayButton = null;
+    private ImageButton mPlayIcon = null;
     private MediaPlayer mPlayer = null;
 
     // Requesting permission to RECORD_AUDIO
@@ -84,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 onPlay(mStartPlaying);
                 if (mStartPlaying && mFirstPlay) {
                     mPlayButton.setText("Stop");
-                    time.setClock(timer);
                     time.startTimer();
                 } else {
                     mPlayButton.setText("PLAY");
