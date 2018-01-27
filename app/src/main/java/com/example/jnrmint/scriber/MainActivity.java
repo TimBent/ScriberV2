@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static String mFileName = null;
 
     private Button mRecordButton = null;
+    private ImageButton mRecIcon = null;
     private MediaRecorder mRecorder = null;
 
     private Button   mPlayButton = null;
@@ -78,17 +79,51 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        mRecIcon = findViewById(R.id.imageButton3);
+        mRecIcon.setBackgroundResource(R.drawable.ic_strt_rec);
+        mRecIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRecord(mStartRecording);
+                if (mStartRecording) {
+                    mRecIcon.setBackgroundResource(R.drawable.ic_stp_rec);
+                    time.startTimer();
+                } else {
+                    mRecIcon.setBackgroundResource(R.drawable.ic_strt_rec);
+                    time.stopTimer();
+                }
+                mStartRecording = !mStartRecording;
+            }
+        });
+
         mPlayButton = findViewById(R.id.btnPlay);
         mPlayButton.setText("PLAY");
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onPlay(mStartPlaying);
-                if (mStartPlaying && mFirstPlay) {
+                if (mStartPlaying) {
                     mPlayButton.setText("Stop");
                     time.startTimer();
                 } else {
                     mPlayButton.setText("PLAY");
+                    time.stopTimer();
+                }
+                mStartPlaying = !mStartPlaying;
+            }
+        });
+
+        mPlayIcon = findViewById(R.id.imageButton);
+        mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
+        mPlayIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPlay(mStartPlaying);
+                if (mStartPlaying) {
+                    mPlayIcon.setBackgroundResource(R.drawable.ic_pse_mb);
+                    time.startTimer();
+                } else {
+                    mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
                     time.stopTimer();
                 }
                 mStartPlaying = !mStartPlaying;
