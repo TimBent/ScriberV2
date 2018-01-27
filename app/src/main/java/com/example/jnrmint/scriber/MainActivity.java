@@ -23,6 +23,8 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     private TextView timeView = null;
+    private TextView reset = null;
+    private TextView status = null;
     private Timer time = null;
 
     private boolean mStartRecording = true;
@@ -59,9 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Timer initiation
         timeView = findViewById(R.id.timer);
+        reset = timeView;
         time = new Timer();
         time.setClock(timeView);
 
+        status = findViewById(R.id.output);
 
         mRecordButton = findViewById(R.id.btnRec);
         mRecordButton.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
-                    mPlayButton.setText("Stop");
+                    //mPlayButton.setText("Stop");
                     time.startTimer();
                 } else {
                     mPlayButton.setText("PLAY");
@@ -120,8 +124,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
+                    if(mFirstPlay){
                     mPlayIcon.setBackgroundResource(R.drawable.ic_pse_mb);
+                    //timeView.setText("00:00");
+                    timeView.setText(R.string.reset);
+                    time = new Timer();
+                    time.setClock(timeView);
+                    status.setText("First Play");
                     time.startTimer();
+                    mFirstPlay = !mFirstPlay;
+                    } else {
+                        status.setText("Second Play");
+                        mPlayIcon.setBackgroundResource(R.drawable.ic_pse_mb);
+                        time.startTimer();
+                    }
                 } else {
                     mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
                     time.stopTimer();
@@ -162,9 +178,16 @@ public class MainActivity extends AppCompatActivity {
     private void startPlaying() {
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(mFileName);
-            mPlayer.prepare();
-            mPlayer.start();
+                mPlayer.setDataSource(mFileName);
+            if(Integer.parseInt(timeView.getText().toString()) < mPlayer.getDuration())
+            //if(!timeView.toString().equalsIgnoreCase(String.valueOf(mPlayer.getDuration())))
+            {
+                mPlayer.prepare();  //preparing player to work
+                mPlayer.start();
+            }
+            else {
+
+            }
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }

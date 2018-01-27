@@ -9,7 +9,6 @@ import android.widget.TextView;
  */
 
 public class Timer {
-
     private long startHTime = 0L;
     private Handler customHandler = new Handler();
     private long timeInMilliseconds = 0L;
@@ -27,12 +26,18 @@ public class Timer {
         customHandler.removeCallbacks(updateTimerThread);
     }
 
+    public void resetTimer(){
+        customHandler.postDelayed(updateTimerThread, 0);
+    }
+
     public void setClock(final TextView text){
         updateTimerThread = new Runnable() {
             final TextView txt;
             {
                 txt = text;
             }
+
+
 
             public void run() {
                 timeInMilliseconds = SystemClock.uptimeMillis() - startHTime;
@@ -45,6 +50,9 @@ public class Timer {
                     txt.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
                 customHandler.postDelayed(this, 0);
             }
+
+
         };
+
     }
 }
