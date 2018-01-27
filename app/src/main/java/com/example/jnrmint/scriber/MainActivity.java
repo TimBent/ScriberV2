@@ -179,15 +179,12 @@ public class MainActivity extends AppCompatActivity {
         mPlayer = new MediaPlayer();
         try {
                 mPlayer.setDataSource(mFileName);
-            if(Integer.parseInt(timeView.getText().toString()) < mPlayer.getDuration())
             //if(!timeView.toString().equalsIgnoreCase(String.valueOf(mPlayer.getDuration())))
-            {
+            //{
                 mPlayer.prepare();  //preparing player to work
                 mPlayer.start();
-            }
-            else {
+            //}
 
-            }
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
