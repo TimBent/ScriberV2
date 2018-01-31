@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean mStartRecording = true;
     private boolean mStartPlaying = true;
     private boolean mFirstPlay = true;
-    private boolean mFirstRecord = true;
+    public boolean mFirstRecord = true;
+
     private boolean mStopped = false;
 
     private static final String LOG_TAG = "AudioRecordTest";
@@ -34,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private static String sFileName = null;
 
     private ImageButton mRecIcon = null;
-    private MediaRecorder mRecorder = null;
+    //private MediaRecorder mRecorder = null;
+    private Recording mRecorder = new Recording();
+
 
     private ImageButton mPlayIcon = null;
     private ImageButton mStopIcon = null;
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         // Record to the external cache directory for visibility
         mFileName = getExternalCacheDir().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
+        mRecorder.setFileName(mFileName);
+
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
@@ -70,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(mStartPlaying) {
-                    onRecord(mStartRecording);
+                    mRecorder.onRecord(mStartRecording);
+                    mRecorder.setmFirstRecord(mFirstRecord);
                     if (mStartRecording) {
                         if(mFirstRecord) {
                             mRecIcon.setBackgroundResource(R.drawable.ic_stp_rec);
@@ -102,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(mStartRecording) {
                     onPlay(mStartPlaying);
-                    //if(!mPlayer.isPlaying()) {
-                    if (mStartPlaying) {
+                    while(mPlayer.isPlaying()) {
+                        if (mStartPlaying) {
                             if (mFirstPlay) {
                                 mPlayIcon.setBackgroundResource(R.drawable.ic_pse_mb);
                                 //timeView.setText("00:00");
@@ -116,17 +122,18 @@ public class MainActivity extends AppCompatActivity {
                                 mPlayIcon.setBackgroundResource(R.drawable.ic_pse_mb);
                                 time.startTimer();
                             }
-                    } else {
-                        mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
-                        time.stopTimer();
-                    }/*}  else    {
+                        } else {
+                            mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
+                            time.stopTimer();
+                        }/*}  else    {
                         mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
                         //timeView.setText("00:00");
                         time.stopTimer();
                         resetTime();
                         status.setText("Playing finished");
                     }*/
-                    mStartPlaying = !mStartPlaying;
+                        mStartPlaying = !mStartPlaying;
+                    }
                 } else {
                     status.setText("Cannot play whilst recording!");
                 }
@@ -142,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 time.stopTimer();
                 resetTime();
                 if(!mStartRecording) {
-                    stopRecording();
+                    mRecorder.stopRecording();
                     mStartRecording = true;
                     mFirstRecord = true;
                     mRecIcon.setBackgroundResource(R.drawable.ic_strt_rec);
@@ -175,14 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void onRecord(boolean start) {
-        if (start) {
-            if(mFirstRecord) startRecording();
-            else mRecorder.start();
-        } else {
-            pauseRecording();
-        }
-    }
+
 
     private void onPlay(boolean start) {
         if (start) {
@@ -211,13 +211,22 @@ public class MainActivity extends AppCompatActivity {
         mPlayer.pause();
     }
 
-    private void pauseRecording(){
-        mRecorder.pause();
-    }
 
     private void stopPlaying() {
         mPlayer.release();
         mPlayer = null;
+    }
+    /*
+    private void onRecord(boolean start) {
+        if (start) {
+            if(mFirstRecord) startRecording();
+            else mRecorder.start();
+        } else {
+            pauseRecording();
+        }
+    }
+    private void pauseRecording(){
+        mRecorder.pause();
     }
 
     private void startRecording() {
@@ -240,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
-    }
+    }*/
 
     @Override
     public void onStop() {
