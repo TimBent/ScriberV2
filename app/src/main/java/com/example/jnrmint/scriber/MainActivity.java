@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private static String sFileName = null;
 
     private ImageButton mRecIcon = null;
-    //private MediaRecorder mRecorder = null;
-    private Recording mRecorder = new Recording();
+    private MediaRecorder mRecorder = null;
+    //private Recording mRecorder = new Recording();
 
 
     private ImageButton mPlayIcon = null;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         // Record to the external cache directory for visibility
         mFileName = getExternalCacheDir().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
-        mRecorder.setFileName(mFileName);
+        //mRecorder.setFileName(mFileName);
 
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(mStartPlaying) {
-                    mRecorder.onRecord(mStartRecording);
-                    mRecorder.setmFirstRecord(mFirstRecord);
+                    onRecord(mStartRecording);
+                    //mRecorder.setmFirstRecord(mFirstRecord);
                     if (mStartRecording) {
                         if(mFirstRecord) {
                             mRecIcon.setBackgroundResource(R.drawable.ic_stp_rec);
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(mStartRecording) {
                     onPlay(mStartPlaying);
-                    while(mPlayer.isPlaying()) {
+                    //while(mPlayer.isPlaying()) {
                         if (mStartPlaying) {
                             if (mFirstPlay) {
                                 mPlayIcon.setBackgroundResource(R.drawable.ic_pse_mb);
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                         status.setText("Playing finished");
                     }*/
                         mStartPlaying = !mStartPlaying;
-                    }
+
                 } else {
                     status.setText("Cannot play whilst recording!");
                 }
@@ -145,17 +145,18 @@ public class MainActivity extends AppCompatActivity {
         mStopIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onStop();
                 status.setText("All media stopped!");
                 time.stopTimer();
                 resetTime();
                 if(!mStartRecording) {
-                    mRecorder.stopRecording();
+                    //mRecorder.stopRecording();
                     mStartRecording = true;
                     mFirstRecord = true;
                     mRecIcon.setBackgroundResource(R.drawable.ic_strt_rec);
                 }
                 if (!mStartPlaying)  {
-                    stopPlaying();
+                    //stopPlaying();
                     mStartPlaying = true;
                     mFirstPlay = true;
                     mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
@@ -216,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         mPlayer.release();
         mPlayer = null;
     }
-    /*
+
     private void onRecord(boolean start) {
         if (start) {
             if(mFirstRecord) startRecording();
@@ -249,19 +250,17 @@ public class MainActivity extends AppCompatActivity {
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
-    }*/
+    }
 
     @Override
     public void onStop() {
         super.onStop();
         if (mRecorder != null) {
-            mRecorder.release();
-            mRecorder = null;
+            stopRecording();
         }
 
         if (mPlayer != null) {
-            mPlayer.release();
-            mPlayer = null;
+            stopPlaying();
         }
     }
 }

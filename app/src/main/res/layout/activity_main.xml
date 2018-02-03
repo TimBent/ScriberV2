@@ -7,25 +7,51 @@
     tools:context="com.example.jnrmint.scriber.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <TextView
-        android:id="@+id/timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
-        android:layout_marginTop="48dp"
-        android:text="@string/reset"
-        android:textSize="36sp"
+    <RelativeLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="58dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/reset"
+            android:textSize="36sp"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+
+        <TextView
+            android:id="@+id/timer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="79dp"
+            android:text="@string/reset"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="237dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/output"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="99dp"
         android:layout_marginEnd="31dp"
         android:layout_marginStart="31dp"
         android:text="@string/status"
@@ -38,7 +64,7 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout3"
-        android:layout_width="0dp"
+        android:layout_width="318dp"
         android:layout_height="82dp"
         android:layout_marginBottom="160dp"
         android:layout_marginEnd="33dp"
@@ -46,7 +72,7 @@
         app:layout_constraintBottom_toTopOf="@+id/output"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout4">
 
         <ImageButton
             android:id="@+id/recstopBtn"

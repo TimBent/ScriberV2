@@ -1,4 +1,4 @@
-package com.example.jnrmint.scriber;
+/*package com.example.jnrmint.scriber;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -11,7 +11,7 @@ import android.widget.TextView;
  * Created by tim-b on 31/01/2018.
  */
 
-public class PlayButton extends android.support.v7.widget.AppCompatImageButton {
+/*public class PlayButton extends android.support.v7.widget.AppCompatImageButton {
 
     private boolean mStartRecording;
     private boolean mStartPlaying;
@@ -52,7 +52,7 @@ public class PlayButton extends android.support.v7.widget.AppCompatImageButton {
                         resetTime();
                         status.setText("Playing finished");
                     }*/
-                    mStartPlaying = !mStartPlaying;
+                   /*mStartPlaying = !mStartPlaying;
                 }
             } else {
                 status.setText("Cannot play whilst recording!");
@@ -65,10 +65,4 @@ public class PlayButton extends android.support.v7.widget.AppCompatImageButton {
         this.setOnClickListener(clickEvent);
     }
 
-    public void getAttribute(Boolean sP, Boolean sR, Boolean fp, )
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-}
+}*/
