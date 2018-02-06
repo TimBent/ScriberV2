@@ -1,6 +1,7 @@
 package com.example.jnrmint.scriber;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Record to the external cache directory for visibility
         mFileName = getExternalCacheDir().getAbsolutePath();
-        mFileName += "/audiorecordtest.3gp";
+        mFileName += "/audiorecordtest.WAV";
         //mRecorder.setFileName(mFileName);
 
 
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         status = findViewById(R.id.output);
 
         mRecIcon = findViewById(R.id.playpausebtn);
-        mRecIcon.setBackgroundResource(R.drawable.ic_strt_rec);
+        mRecIcon.setBackgroundResource(R.drawable.ic_fiber_manual_record_black_24dp);
         mRecIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,18 +80,18 @@ public class MainActivity extends AppCompatActivity {
                     //mRecorder.setmFirstRecord(mFirstRecord);
                     if (mStartRecording) {
                         if(mFirstRecord) {
-                            mRecIcon.setBackgroundResource(R.drawable.ic_stp_rec);
+                            mRecIcon.setBackgroundResource(R.drawable.ic_pause_red_24dp);
                             resetTime();
                             status.setText("Recording started");
                             time.startTimer();
                             mFirstRecord = !mFirstRecord;
                         } else {
-                            mRecIcon.setBackgroundResource(R.drawable.ic_stp_rec);
+                            mRecIcon.setBackgroundResource(R.drawable.ic_pause_red_24dp);
                             status.setText("Recording resumed");
                             time.startTimer();
                         }
                     } else {
-                        mRecIcon.setBackgroundResource(R.drawable.ic_strt_rec);
+                        mRecIcon.setBackgroundResource(R.drawable.ic_fiber_manual_record_black_24dp);
                         status.setText("Recording Paused");
                         time.stopTimer();
                     }
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mPlayIcon = findViewById(R.id.recstopBtn);
-        mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
+        mPlayIcon.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
         mPlayIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     //while(mPlayer.isPlaying()) {
                         if (mStartPlaying) {
                             if (mFirstPlay) {
-                                mPlayIcon.setBackgroundResource(R.drawable.ic_pse_mb);
+                                mPlayIcon.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                                 //timeView.setText("00:00");
                                 resetTime();
                                 status.setText("First Play");
@@ -119,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
                                 mFirstPlay = !mFirstPlay;
                             } else {
                                 status.setText("Second Play");
-                                mPlayIcon.setBackgroundResource(R.drawable.ic_pse_mb);
+                                mPlayIcon.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                                 time.startTimer();
                             }
                         } else {
-                            mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
+                            mPlayIcon.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
                             time.stopTimer();
                         }/*}  else    {
                         mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mStopIcon = findViewById(R.id.stopplayBtn);
-        mStopIcon.setBackgroundResource(R.drawable.ic_stp_mb);
+        mStopIcon.setBackgroundResource(R.drawable.ic_stop_black_24dp);
         mStopIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,13 +154,13 @@ public class MainActivity extends AppCompatActivity {
                     //mRecorder.stopRecording();
                     mStartRecording = true;
                     mFirstRecord = true;
-                    mRecIcon.setBackgroundResource(R.drawable.ic_strt_rec);
+                    mRecIcon.setBackgroundResource(R.drawable.ic_fiber_manual_record_black_24dp);
                 }
                 if (!mStartPlaying)  {
                     //stopPlaying();
                     mStartPlaying = true;
                     mFirstPlay = true;
-                    mPlayIcon.setBackgroundResource(R.drawable.ic_ply_mb);
+                    mPlayIcon.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
                 }
             }
         });
@@ -226,16 +227,17 @@ public class MainActivity extends AppCompatActivity {
             pauseRecording();
         }
     }
+    @SuppressLint("NewApi")
     private void pauseRecording(){
         mRecorder.pause();
     }
 
     private void startRecording() {
         mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
         mRecorder.setOutputFile(mFileName);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 
         try {
             mRecorder.prepare();

@@ -39,6 +39,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="79dp"
+            android:layout_toEndOf="@+id/timer"
             android:text="@string/reset"
             android:textColor="@android:color/black"
             android:textSize="24sp"
